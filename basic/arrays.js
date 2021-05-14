@@ -25,5 +25,15 @@ notes.splice(0,0,'new note bro')
 
 //tha prosthesei apla se auth th thesh to kainourgio to palio tha diaxrafei
 notes[2] = 'bla bla'
-console.log(notes)
 
+
+
+//looking for value in an array. de douleuei gia pinaka apo objects
+notes.indexOf('Note 2')
+
+// gia pinaka me objects
+
+const index = notes.findIndex(function (note, index) {
+    
+    return note.tile === " value that wre are alloking"
+}
