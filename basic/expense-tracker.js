@@ -17,8 +17,9 @@ const account = {
         return `${this.name} has $${totalExpenses} in expenses .`
     },
     addIncome: function (description , amount) {
-        acount.income.push ({
+        this.income.push ({
             description: description,
+            anmount: amount
         })
     }
 }
