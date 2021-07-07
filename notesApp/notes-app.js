@@ -1,40 +1,18 @@
-// Dom document object model
-//pairnw to element kai meta remove
-const notes = [
-  {
-    title: "My next trip",
-    body: "I would like to go to spain",
-  },
-  {
-    title: "Habbits to work on",
-    body: "Exercise, Eating a bit better",
-  },
-  {
-    title: "Office modification",
-    body: " Get a new seat",
-  },
-];
+const notes = getSavedNotes();
 
 const filters = {
   searchText: "",
 };
 
-const renderNotes = function (notes, filters) {
-  const filteredNotes = notes.filter(function (note) {
-    return note.title.toLowerCase().includes(filters.searchText.toLowerCase());
-  });
-  document.querySelector("#notes").innerHTML = "";
-  filteredNotes.forEach(function (note) {
-    const noteEl = document.createElement("p");
-    noteEl.textContent = note.title;
-    document.querySelector("#notes").appendChild(noteEl);
-  });
-};
-
 renderNotes(notes, filters);
 
 document.querySelector("#create-note").addEventListener("click", function (e) {
-  e.target.textContent = "The button was clicked";
+  notes.push({
+    title: "",
+    body: "",
+  });
+  saveNotes(notes);
+  renderNotes(notes, filters);
 });
 
 document.querySelector("#search-text").addEventListener("input", function (e) {
@@ -42,7 +20,6 @@ document.querySelector("#search-text").addEventListener("input", function (e) {
   renderNotes(notes, filters);
 });
 
-document.querySelector("#name-form").addEventListener("sumbit", function (e) {
-  e.preventDefault();
-  e.target.elements.firstName.value = " ";
+document.querySelector("#filter-by").addEventListener("change", function (e) {
+  console.log(e.target.value);
 });
