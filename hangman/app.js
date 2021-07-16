@@ -14,3 +14,18 @@ window.addEventListener('keypress', function(e) {
     puzzleEl.textContent = game1.puzzle
     guessesEl.textContent = game1.statusMessage
 })
+
+//  Making an HTTP request
+
+const request = new XMLHttpRequest()
+
+request.addEventListener("readystagechange", (e) => {
+    // we have the final response
+    if (e.target.readyState === 4 && e.target.status === 200) {
+        const data = JSON.parse(e.target.responseText)
+    } else if (e.target.readyState === 4) {
+        console.log("An error has taken place")
+    }
+})
+request.open("GET", "https://puzzle.mead.io/puzzle")
+request.send()
