@@ -17,24 +17,18 @@ const getPuzzle = (callback) => {
     request.send()
 }
 
-const getCountrDetails = (callback) => {
+const getCountrDetails = (countryCode, callback) => {
     const CountryRequest = new XMLHttpRequest()
 
     CountryRequest.addEventListener("readystatechange", (e) => {
         if (e.target.readyState === 4 && e.target.status === 200) {
             const data = JSON.parse(e.target.responseText)
-            const coutry = data.find((country) => country.alpha2Code === "GR")
+            const coutry = data.find((country) => country.alpha2Code === countryCode)
+            callback(undefined, country)
         } else if (e.target.readyState === 4) {
-            console.log("An error has taken place")
+            callback("unable to fetch data", undefined)
         }
     })
 
     CountryRequest.open("GET", "http://restcountries.eu/rest/v2/all")
 }
-getCountrDetails("GR", (error, country) => {
-    if (error) {
-        console.log(`Error: ${error}`)
-    } else {
-        console.log(`Countr name: ${country.name}`)
-    }
-})
