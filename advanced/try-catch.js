@@ -1,14 +1,15 @@
 const getTip = (amount) => {
-    if (typeof amount === "number") {
+    if (typeof amount === 'number') {
         return amount * .25
     } else {
-        throw Error("Argument must be a number")
+        throw Error('Argument must be a number')
     }
 }
 
 try {
-    const result = getTip("test")
+    const result = getTip(10)
     console.log(result)
 } catch (e) {
-    console.log("catch block is running")
+    console.log('catch block is running')
 }
+

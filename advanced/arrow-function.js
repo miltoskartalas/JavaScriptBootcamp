@@ -1,29 +1,28 @@
-// short
 const square = (num) => num * num
 
-// long 
 const squareLong = (num) => {
     return num * num
 }
 
+console.log(square(5))
+
 const people = [{
-    name: Miltos,
+    name: 'Andrew',
     age: 27
 }, {
-    name: Maria,
+    name: 'Vikram',
     age: 31
 }, {
-    name: antonia,
+    name: 'Jess',
     age: 22
 }]
 
-
-// const under30 = people.filter(function(person) {
+// const under30 = people.filter(function (person) {
 //     return person.age < 30
 // })
 
-// arrow 
 const under30 = people.filter((person) => person.age < 30)
+console.log(under30)
 
-
-const equal22 = people.find((person) => person.age === 22)
+const person = people.find((person) => person.age === 22)
+console.log(person.name)

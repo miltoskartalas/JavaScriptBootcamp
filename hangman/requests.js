@@ -1,34 +1,33 @@
-const getPuzzle = (callback) => {
-
-
-    const request = new XMLHttpRequest()
-
-    request.addEventListener("readystagechange", (e) => {
-        // we have the final response
-        if (e.target.readyState === 4 && e.target.status === 200) {
-            const data = JSON.parse(e.target.responseText)
-            callback(undefined, data.puzzle)
-        } else if (e.target.readyState === 4) {
-            callback("An error has taken place", undefined)
-
+const getPuzzle = (wordCount) => {
+    return fetch(`http://puzzle.mead.io/puzzle?wordCount=${wordCount}`).then((response) => {
+        if (response.status === 200) {
+            return response.json()
+        } else {
+            throw new Error('Unable to fetch puzzle')
         }
+    }).then((data) => {
+        return data.puzzle
     })
-    request.open("GET", "https://puzzle.mead.io/puzzle")
-    request.send()
 }
 
-const getCountrDetails = (countryCode, callback) => {
-    const CountryRequest = new XMLHttpRequest()
+const getCountry = (countryCode) => {
+    return fetch('http://restcountries.eu/rest/v2/all').then((response) => {
+        if (response.status === 200) {
+            return response.json()
+        } else {
+            throw new Error('Unable to fetch data')
+        }
+    }).then((data) => {
+        return data.find((country) => country.alpha2Code === countryCode)
+    })
+}
 
-    CountryRequest.addEventListener("readystatechange", (e) => {
-        if (e.target.readyState === 4 && e.target.status === 200) {
-            const data = JSON.parse(e.target.responseText)
-            const coutry = data.find((country) => country.alpha2Code === countryCode)
-            callback(undefined, country)
-        } else if (e.target.readyState === 4) {
-            callback("unable to fetch data", undefined)
+const getLocation = () => {
+    return fetch('http://ipinfo.io/json?token=1a11bd55cc8f9c').then((response) => {
+        if (response.status === 200) {
+            return response.json()
+        } else {
+            throw new Error('Unable to fetch location')
         }
     })
-
-    CountryRequest.open("GET", "http://restcountries.eu/rest/v2/all")
 }

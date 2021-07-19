@@ -1,40 +1,27 @@
-const getPuzzle = (callback) => {
+const puzzleEl = document.querySelector('#puzzle')
+const guessesEl = document.querySelector('#guesses')
+const game1 = new Hangman('Car Parts', 2)
 
+puzzleEl.textContent = game1.puzzle
+guessesEl.textContent = game1.statusMessage
 
-    const request = new XMLHttpRequest()
+window.addEventListener('keypress', (e) => {
+    const guess = String.fromCharCode(e.charCode)
+    game1.makeGuess(guess)
+    puzzleEl.textContent = game1.puzzle
+    guessesEl.textContent = game1.statusMessage
+})
 
-    request.addEventListener("readystagechange", (e) => {
-        // we have the final response
-        if (e.target.readyState === 4 && e.target.status === 200) {
-            const data = JSON.parse(e.target.responseText)
-            callback(undefined, data.puzzle)
-        } else if (e.target.readyState === 4) {
-            callback("An error has taken place", undefined)
+getPuzzle('2').then((puzzle) => {
+    console.log(puzzle)
+}).catch((err) => {
+    console.log(`Error: ${err}`)
+})
 
-        }
-    })
-    request.open("GET", "https://puzzle.mead.io/puzzle")
-    request.send()
-}
-
-const getCountrDetails = (callback) => {
-    const CountryRequest = new XMLHttpRequest()
-
-    CountryRequest.addEventListener("readystatechange", (e) => {
-        if (e.target.readyState === 4 && e.target.status === 200) {
-            const data = JSON.parse(e.target.responseText)
-            const coutry = data.find((country) => country.alpha2Code === "GR")
-        } else if (e.target.readyState === 4) {
-            console.log("An error has taken place")
-        }
-    })
-
-    CountryRequest.open("GET", "http://restcountries.eu/rest/v2/all")
-}
-getCountrDetails("GR", (error, country) => {
-    if (error) {
-        console.log(`Error: ${error}`)
-    } else {
-        console.log(`Countr name: ${country.name}`)
-    }
+getLocation().then((location) => {
+    return getCountry(location.country)
+}).then((country) => {
+    console.log(country.name)
+}).catch((err) => {
+    console.log(`Error: ${err}`)
 })
