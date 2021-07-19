@@ -50,3 +50,9 @@ const getLocation = async() => {
     }
 
 }
+
+const getCurrenCoutry = async() => {
+    const location = await getLocation()
+    const country = await getCountry(location.country)
+    return country
+}
